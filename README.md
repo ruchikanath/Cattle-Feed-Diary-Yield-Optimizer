@@ -1,51 +1,170 @@
-# Cattle Feed Optimization & Dairy Yield Forecasting
+# Cattle Feed & Dairy Yield Optimisation System
 
-A decision support system for Indian dairy farmers, combining a linear-programming-based
-least-cost feed formulator with a machine-learning milk yield predictor, integrated into
-a live interactive dashboard.
+### An AI-Powered Decision Support System for Dairy Cattle Feed Formulation and Profit Optimisation
 
-Built during Practice School - I at CDAC CINE, Silchar (BITS Pilani), May–July 2026.
+## Project Overview
 
-## What's here
+The **Cattle Feed & Dairy Yield Optimisation System** is an intelligent decision-support platform designed to support dairy farmers and livestock management professionals in developing cost-effective and nutritionally balanced cattle feed formulations.
 
-- **LP ration formulator** (`Optimisation_Engine_v1.ipynb`) — PuLP/CBC solver, ICAR 2013
-  nutrient requirement tables, 19-ingredient Gujarat/western-Maharashtra nutrient matrix,
-  five cattle breed profiles.
-- **ML yield predictor** (`Milk_Yield_Predictor.ipynb`) — stacked ensemble
-  (Ridge/Lasso/XGBoost/LightGBM → Ridge meta-learner) trained on the CowNflow/INRAE
-  dataset. OOF RMSE 2.79 kg/day, R² = 0.88.
-- **Integration** (`Optimisation_Engine_v2_POC.py`, `Optimisation_Engine_v3.py`,
-  `profit_optimizer.py`) — parametric profit-frontier sweep linking the two modules,
-  plus a distribution-aware fallback that resolves a population mismatch between the
-  ML model's training data and the rations the LP produces (see `dashboard/README.md`
-  for details).
-- **Dashboard** (`dashboard/`) — Flask backend + self-contained HTML/CSS/JS frontend.
-  Solves the LP and runs the yield stack live for any input combination, with a
-  chain-rule SHAP explanation panel and rule-based feedback.
+The system combines Machine Learning, nutritional analysis, predictive modelling and mathematical optimisation to support informed decisions on feed composition, milk yield prediction and profitability.
 
-## Quick start (dashboard)
+It integrates a stacked-ensemble machine learning approach for milk yield prediction with a Linear Programming-based optimisation engine for feed formulation and cost optimisation.
 
-```bash
-cd dashboard
-pip install -r requirements.txt
-python backend.py
+The project also includes an interactive dashboard to make analytical results and optimisation outputs accessible through a user-friendly interface.
+
+## Key Objectives
+
+- Develop machine learning models to predict dairy cattle milk yield.
+- Analyse the relationship between feed composition, nutritional parameters and milk production.
+- Formulate nutritionally balanced cattle feed at optimised cost.
+- Apply mathematical optimisation to identify suitable feed combinations.
+- Evaluate economic trade-offs between feed cost and expected productivity.
+- Provide explainable insights to support data-driven decision-making.
+
+## System Architecture
+
+The project integrates four major functional components:
+
+### 1. Milk Yield Prediction
+
+A machine learning pipeline designed to estimate milk yield using relevant cattle and feed-related parameters.
+
+The modelling workflow includes:
+
+- Data preprocessing and feature preparation.
+- Training and evaluation of multiple machine learning models.
+- Ensemble learning for improved predictive performance.
+- Comparison of model predictions and evaluation metrics.
+
+**Machine Learning models explored:**
+- Ridge Regression
+- Lasso Regression
+- XGBoost
+- LightGBM
+- Stacked Ensemble Learning
+
+### 2. Feed Formulation and Optimisation
+
+A mathematical optimisation engine designed to identify suitable feed combinations while considering nutritional requirements and formulation costs.
+
+The optimisation workflow includes:
+
+- Nutritional constraint definition.
+- Feed ingredient selection.
+- Cost-based optimisation.
+- Evaluation of nutrient composition.
+- Identification of feasible feed formulations.
+
+Linear Programming is used to formulate the feed optimisation problem.
+
+### 3. Profit Optimisation and Explainability
+
+The project incorporates economic optimisation and model interpretation to support better decision-making.
+
+Key capabilities include:
+
+- Evaluation of feed formulation costs.
+- Analysis of profitability-related parameters.
+- SHAP-based model explainability.
+- Interpretation of important predictive features.
+- Comparison of alternative optimisation outcomes.
+
+### 4. Interactive Decision Support Dashboard
+
+An interactive dashboard provides access to the underlying prediction and optimisation functionalities.
+
+The dashboard includes supporting modules for:
+
+- Milk yield prediction.
+- Feed and nutritional data analysis.
+- Feed formulation and optimisation.
+- Nutritional matrix-based analysis.
+- Decision support and result interpretation.
+
+## Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Programming | Python |
+| Machine Learning | Scikit-learn, XGBoost, LightGBM |
+| Ensemble Learning | Stacked Regression |
+| Optimisation | Linear Programming, PuLP |
+| Explainable AI | SHAP |
+| Data Processing | Pandas, NumPy |
+| Visualisation | Data visualisation libraries |
+| Development | Jupyter Notebook |
+| Interface | Interactive Dashboard |
+
+## Repository Structure
+
+```text
+Cattle-Feed-Diary-Yield-Optimizer/
+│
+├── dashboard/
+│   ├── backend.py
+│   ├── model_core.py
+│   ├── data/
+│   ├── static/
+│   ├── requirements.txt
+│   └── README.md
+│
+├── Milk Yield Predictor.ipynb
+├── Optimisation Engine_v1.ipynb
+├── Optimisation Engine_v2_POC.py
+├── Optimisation Engine_v3.py
+├── profit_optimizer.py
+│
+└── README.md
 ```
-Then open `http://127.0.0.1:5050`. First launch trains the ML stack once (~5-10s,
-cached after).
 
-## Data
+## Project Workflow
 
-- `Dairy_Data.csv` — CowNflow dataset (INRAE), 414 Holstein cow-period records, used
-  to train the yield model.
-- `nutri_matrix_guj.csv` — regional feed ingredient nutrient matrix (Gujarat / western
-  Maharashtra).
-- `animal_profiles.csv` — five ICAR-derived cattle breed profiles used as presets.
+1. **Data Preparation:** Prepare cattle, feed and nutritional information for analysis.
+2. **Predictive Modelling:** Train and evaluate machine learning models for milk yield prediction.
+3. **Nutritional Analysis:** Define feed ingredient composition and nutritional requirements.
+4. **Optimisation:** Apply mathematical optimisation to identify suitable feed formulations.
+5. **Economic Evaluation:** Analyse feed costs and profitability-related outcomes.
+6. **Decision Support:** Present predictions and optimisation results through the interactive dashboard.
 
-## Notes
+## Applications
 
-- The ML model's training population (high-input, 430-907 kg BW) differs from the
-  ICAR-based ration space this LP targets (350-450 kg BW). The dashboard checks each
-  ration's profile against the ML model's training envelope and falls back to an
-  ICAR response-curve yield estimate when out of range — see `dashboard/README.md`.
-- Ingredient costs are indicative (cross-checked against IndiaMart Ahmedabad listings)
-  and should be refreshed for real deployment use.
+- Dairy farm management and planning.
+- Cost-effective cattle feed formulation.
+- Milk yield prediction and analysis.
+- Nutritional decision support.
+- Feed cost and profitability assessment.
+- Data-driven livestock management.
+
+## Research and Development Scope
+
+The project demonstrates the integration of predictive machine learning and mathematical optimisation in an agricultural decision-support application.
+
+It provides a foundation for further development in:
+
+- Precision livestock farming.
+- AI-driven nutritional recommendations.
+- Multi-objective feed and profit optimisation.
+- Explainable machine learning for agricultural applications.
+- Intelligent dairy farm management systems.
+
+## Future Enhancements
+
+- Integration of real-time dairy farm data.
+- Advanced multi-objective optimisation considering nutrition, cost and productivity.
+- Enhanced explainability and model interpretation.
+- Automated feed recommendation capabilities.
+- Cloud-based deployment and scalable decision-support services.
+
+## Author
+
+**Ruchika Nath**
+
+AI/ML Engineer | Machine Learning | Optimisation | Explainable AI
+
+GitHub: [https://github.com/ruchikanath](https://github.com/ruchikanath)
+
+LinkedIn: [https://linkedin.com/in/ruchika-nath-164924195](https://linkedin.com/in/ruchika-nath-164924195)
+
+---
+
+*This project is intended for research, experimentation and decision-support applications in dairy cattle feed formulation and yield optimisation.*
